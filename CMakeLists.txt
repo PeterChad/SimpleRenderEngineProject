@@ -129,4 +129,4 @@ mark_as_advanced(
 	SDL2MAIN_LIBRARY
 )
 
-add_subdirectory(Exercise8)
+add_subdirectory(Exercise10)
