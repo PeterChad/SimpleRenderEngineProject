@@ -35,7 +35,7 @@ void ComponentPlatformMove::Update(float delta) {
 
 	float v = Easing(t);
 
-	glm::vec3 pos = _str * (1 - v) + _end * v;
+	glm::vec3 pos = _str * (1 - v) + _end * v; //+ glm::vec3(100 * t, 1 * _t, 0)
 
 
 	glm::vec2 d = pos - gameObject->GetPosition();

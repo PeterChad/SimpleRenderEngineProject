@@ -8,7 +8,7 @@ void ComponentPlatform::Init(rapidjson::Value& serializedData) {
 	_type = static_cast<PlatformType>(serializedData["type"].GetInt());
 
 	float halfSize = _size / 2;
-	float halfSizeBody = _tileSize / 2;
+	float halfSizeBody = _tileSize / 2; //What is this? //tileSize is a float constant from header file
 
 	glm::vec2 offset = glm::vec2(0, 0);
 	if (_type == PlatformType::Platform)

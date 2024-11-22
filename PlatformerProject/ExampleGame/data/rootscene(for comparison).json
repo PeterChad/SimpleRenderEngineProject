@@ -28,7 +28,7 @@
 			{
 				"name": "Ceiling",
 				"transform": {
-					"position": [504, 504, 0],
+					"position": [1000, 1000, 0],
 					"rotation": [0, 0, 0],
 					"scale": [1, 1, 1]
 				},
