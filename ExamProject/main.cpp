@@ -69,6 +69,6 @@ int main() {
     return 0;
 }
 
-//Notes from Peter:
+//Questions from Peter:
 //On line 62, why not set accumulator to 0?
 //On line 43, why add things up like this instead of just checking previousTime vs currentTime? like: if (currentTime - previousTime > fixedTimeStep) {update}
