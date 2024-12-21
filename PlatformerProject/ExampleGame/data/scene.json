@@ -172,7 +172,7 @@
 						"typeId": "CAMERA",
 						"serializedData": {
 							"projectionType": 0,
-							"projectionParams": [300,-1,1]
+							"projectionParams": [400,-1,1]
 						}
 					},
 					{
@@ -180,6 +180,7 @@
 						"serializedData": {
 							"target": "Player",
 							"offsetX": 0,
+							"offsetY": 150,
 							"lockX": true,
 							"lockY": false
 						}
