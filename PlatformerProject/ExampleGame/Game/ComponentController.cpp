@@ -6,6 +6,7 @@
 #include "Engine/MyEngine.h"
 #include "Engine/Components/ComponentPhysicsBody.h"
 #include "ComponentPlatformBounce.h"
+#include "ComponentJetpack.h"
 
 void ComponentController::Init(rapidjson::Value& serializedData) {
 	auto gameObject = GetGameObject().lock();
@@ -28,6 +29,10 @@ void ComponentController::Update(float deltaTime) {
 	if (_jump) {
 		body->addImpulse(glm::vec2(0, _jumpStrength));
 		_jump = false;
+	}
+	if (_jetpack) {
+		body->addImpulse(glm::vec2(0, _jetpackStrength));
+		_jetpack = false;
 	}
 }
 
@@ -54,12 +59,20 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 	auto collidedBody = other->GetGameObject().lock();
 	auto collidedGameObject = collidedBody.get();
 	auto bouncyGround = collidedBody->FindComponent<ComponentPlatformBounce>().lock();
+	auto jetpack = collidedBody->FindComponent<ComponentJetpack>().lock();
 	if (bouncyGround) {
 		if (!collidedBody) {
 			return;
 		}
 		engine->RegisterForDestruction(collidedGameObject);
 		_jump = true;
+	}
+	if (jetpack) {
+		if (!collidedBody) {
+			return;
+		}
+		engine->RegisterForDestruction(collidedGameObject);
+		_jetpack = true;
 	}
 	
 	else if (manifold->localNormal.y > .99)

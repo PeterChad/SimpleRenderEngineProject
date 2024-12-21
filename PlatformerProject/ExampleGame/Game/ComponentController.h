@@ -15,9 +15,12 @@ private:
 	glm::vec3 _mov;
 	bool _jump;
 	bool _grounded;
+	bool _jetpack;
 
 	float _movSpeed = 2;
 	float _jumpStrength = 1;
+	float _jetpackStrength = 3;
+	
 
 	//MyEngine::Engine* engine;
 };
