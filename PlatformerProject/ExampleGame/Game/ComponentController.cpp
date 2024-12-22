@@ -5,6 +5,7 @@
 
 #include "Engine/MyEngine.h"
 #include "Engine/Components/ComponentPhysicsBody.h"
+#include "ComponentPlatform.h"
 #include "ComponentPlatformBounce.h"
 #include "ComponentJetpack.h"
 
@@ -58,14 +59,17 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 	auto engine = MyEngine::Engine::GetInstance();
 	auto collidedBody = other->GetGameObject().lock();
 	auto collidedGameObject = collidedBody.get();
-	auto bouncyGround = collidedBody->FindComponent<ComponentPlatformBounce>().lock();
+	auto platformCollision = collidedBody->FindComponent<ComponentPlatform>().lock();
+	auto destructiblePlatform = collidedBody->FindComponent<ComponentPlatformBounce>().lock();
 	auto jetpack = collidedBody->FindComponent<ComponentJetpack>().lock();
-	if (bouncyGround) {
+	if (platformCollision) {
 		if (!collidedBody) {
 			return;
 		}
-		engine->RegisterForDestruction(collidedGameObject);
 		_jump = true;
+		if (destructiblePlatform) {
+			engine->RegisterForDestruction(collidedGameObject);
+		}
 	}
 	if (jetpack) {
 		if (!collidedBody) {

@@ -14,6 +14,7 @@
 #include "Box2DDebugDraw.hpp"
 
 #include "GameObject.h"
+#include "SoundSystem.h"
 
 class ComponentPhysicsBody;
 
