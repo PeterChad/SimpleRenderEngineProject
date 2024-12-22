@@ -11,7 +11,6 @@ void ComponentJetpack::Init(rapidjson::Value& serializedData) {
 
 	// body
 	glm::vec2 sizeBody = glm::vec2(_size, _size);
-	sizeBody /= 2;
 	auto body = GetGameObject().lock()->CreateComponent<ComponentPhysicsBody>().lock();
 	body->CreateBody(b2_kinematicBody, false, sizeBody);
 
