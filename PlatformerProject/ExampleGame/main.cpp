@@ -10,6 +10,7 @@
 #include "Game/ComponentSpline.h"
 #include "Game/ComponentPlatformBounce.h"
 #include "Game/ComponentJetpack.h"
+#include "Game/PlatformManager.h"
 
 MyEngine::Engine engine;
 
@@ -21,6 +22,7 @@ int main() {
 	MyEngine::ComponentFactory::RegisterComponentOfType("SPLINE", []() { return std::make_shared<ComponentSpline>(); });
 	MyEngine::ComponentFactory::RegisterComponentOfType("PLATFORM_BOUNCER", []() { return std::make_shared<ComponentPlatformBounce>(); });
 	MyEngine::ComponentFactory::RegisterComponentOfType("JETPACK", []() { return std::make_shared<ComponentJetpack>(); });
+	MyEngine::ComponentFactory::RegisterComponentOfType("PLATFORM_MANAGER", []() { return std::make_shared<PlatformManager>(); });
 	
 	engine.Init("data/scene.json");
 }

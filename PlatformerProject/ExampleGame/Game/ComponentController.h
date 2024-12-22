@@ -18,9 +18,7 @@ private:
 	bool _jetpack;
 
 	float _movSpeed = 2;
-	float _jumpStrength = 1;
-	float _jetpackStrength = 3;
-	
+	float _jumpStrength = 2;
+	float _jetpackStrength = 5;
 
-	//MyEngine::Engine* engine;
 };

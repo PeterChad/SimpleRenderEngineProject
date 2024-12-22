@@ -6,8 +6,10 @@
 #include "Engine/MyEngine.h"
 #include "Engine/Components/ComponentPhysicsBody.h"
 #include "ComponentPlatform.h"
+
 #include "ComponentPlatformBounce.h"
 #include "ComponentJetpack.h"
+
 
 void ComponentController::Init(rapidjson::Value& serializedData) {
 	auto gameObject = GetGameObject().lock();
@@ -15,7 +17,6 @@ void ComponentController::Init(rapidjson::Value& serializedData) {
 		return;
 
 	_body = gameObject->FindComponent<ComponentPhysicsBody>();
-	//auto engine = MyEngine::Engine::GetInstance();
 }
 
 void ComponentController::Update(float deltaTime) {
@@ -31,6 +32,7 @@ void ComponentController::Update(float deltaTime) {
 		body->addImpulse(glm::vec2(0, _jumpStrength));
 		_jump = false;
 	}
+
 	if (_jetpack) {
 		body->addImpulse(glm::vec2(0, _jetpackStrength));
 		_jetpack = false;
@@ -59,28 +61,32 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 	auto engine = MyEngine::Engine::GetInstance();
 	auto collidedBody = other->GetGameObject().lock();
 	auto collidedGameObject = collidedBody.get();
+
 	auto platformCollision = collidedBody->FindComponent<ComponentPlatform>().lock();
-	auto destructiblePlatform = collidedBody->FindComponent<ComponentPlatformBounce>().lock();
-	auto jetpack = collidedBody->FindComponent<ComponentJetpack>().lock();
+	auto jetpackCollision = collidedBody->FindComponent<ComponentJetpack>().lock();
 	if (platformCollision) {
 		if (!collidedBody) {
 			return;
 		}
 		_jump = true;
-		if (destructiblePlatform) {
+		if (platformCollision->_bouncy) {
 			engine->RegisterForDestruction(collidedGameObject);
-		}
-	}
-	if (jetpack) {
-		if (!collidedBody) {
 			return;
+		}
+	  }
+	  if (jetpackCollision) {
+		if (!collidedBody) {
+		  return;
 		}
 		engine->RegisterForDestruction(collidedGameObject);
 		_jetpack = true;
-	}
+		}
 	
-	else if (manifold->localNormal.y > .99)
-		_grounded = true;
+	/*bool bunnyAbove = collidedBody->GetPosition().y < GetGameObject().lock()->GetPosition().y;
+	float impactDirection = abs(manifold->localNormal.y) * (bunnyAbove*2-1);
+	if (impactDirection > .99)
+	
+		_grounded = true;*/
 }
 
 void ComponentController::OnCollisionEnd(ComponentPhysicsBody* other, b2Manifold* manifold) {

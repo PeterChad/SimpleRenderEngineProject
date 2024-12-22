@@ -54,12 +54,7 @@ namespace MyEngine {
 		rapidjson::IStreamWrapper isw(fis);
 		rapidjson::Document document;
 		document.ParseStream(isw);
-
-		//load sound system
-		/*SoundSystem* soundSystem = new SoundSystem();
-		soundSystem->Init();
-		soundSystem->PlayMusic();*/
-
+    
 		_gameObjects["root"] = std::make_shared<GameObject>();
 		_root = _gameObjects["root"];
 		if (auto root = _root.lock()) {

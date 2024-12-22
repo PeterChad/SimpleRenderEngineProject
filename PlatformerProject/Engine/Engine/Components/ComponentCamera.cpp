@@ -27,7 +27,7 @@ void ComponentCamera::Init(rapidjson::Value& serializedData) {
 }
 
 void ComponentCamera::Update(float delta) {
-	//Can be removed on hand-in
+	//Can be removed on hand-inh
 	if (_debugging)
 		if (auto gameObject = GetGameObject().lock()) {
 			glm::vec3 pos = gameObject->GetPosition();
