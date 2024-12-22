@@ -12,7 +12,7 @@
 #include "rapidjson/writer.h"
 
 #include "Engine/Components/ComponentPhysicsBody.h"
-#include "Engine/SoundSystem.h"
+#include "Engine/Components/ComponentSoundSystem.h"
 
 namespace MyEngine {
 	Engine* Engine::_instance = nullptr;
