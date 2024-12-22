@@ -25,7 +25,7 @@ void ComponentPlatform::Init(rapidjson::Value& serializedData) {
 	glm::vec3 objectScale = gameObject->GetScale();
 
 	// Apply scale to physics body size
-	glm::vec2 sizeBody = glm::vec2(380, 220);
+	glm::vec2 sizeBody = glm::vec2(380, 100);
 	sizeBody *= glm::vec2(objectScale.x, objectScale.y); // Apply GameObject's scale
 	sizeBody /= 2; // Box2D expects half-sizes
 

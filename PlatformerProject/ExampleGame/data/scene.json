@@ -184,15 +184,15 @@
 						"serializedData": {
 							"bodyType": 2,
 							"isSensor": false,
-							"size": [ 10, 10 ],
-							"density": 5
+							"size": [ 30, 40 ],
+							"density": 1
 						}
 					},
 					{
 						"typeId": "CONTROLLER",
 						"serializedData": {
 							"movSpeed": 1,
-							"jumpStrength": 1
+							"jumpStrength": 3
 						}
 					}
 				],
