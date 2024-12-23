@@ -40,10 +40,16 @@ void ComponentController::Update(float deltaTime) {
 		_jetpack = false;
 	}
 
+	//using hardcoded values, should probably fit to screen size given time.
 	auto playerObject = body->GetGameObject().lock();
 	glm::vec3 currentPos = playerObject->GetPosition();
-	if (currentPos[0] < 0) {
-		glm::vec3 newPos = glm::vec3(100, currentPos[1], currentPos[2]);
+	if (currentPos[0] < -177) {
+		glm::vec3 newPos = glm::vec3(500, currentPos[1], currentPos[2]);
+		playerObject->SetPosition(newPos);
+		body->setPosition(newPos);
+	}
+	if (currentPos[0] > 500) {
+		glm::vec3 newPos = glm::vec3(-177, currentPos[1], currentPos[2]);
 		playerObject->SetPosition(newPos);
 		body->setPosition(newPos);
 	}
