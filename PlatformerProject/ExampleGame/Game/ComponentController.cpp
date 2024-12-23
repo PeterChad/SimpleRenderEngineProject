@@ -39,6 +39,14 @@ void ComponentController::Update(float deltaTime) {
 		body->addImpulse(glm::vec2(0, _jetpackStrength));
 		_jetpack = false;
 	}
+
+	auto playerObject = body->GetGameObject().lock();
+	glm::vec3 currentPos = playerObject->GetPosition();
+	if (currentPos[0] < 0) {
+		glm::vec3 newPos = glm::vec3(100, currentPos[1], currentPos[2]);
+		playerObject->SetPosition(newPos);
+		body->setPosition(newPos);
+	}
 }
 
 void ComponentController::KeyEvent(SDL_Event& event) {

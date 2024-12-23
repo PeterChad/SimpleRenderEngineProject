@@ -18,6 +18,7 @@ public:
 	// Instantly affects velocity
 	void addImpulse(glm::vec2 impulse);
 	void setLinearVelocity(glm::vec2 velocity);
+	void setPosition(glm::vec3);
 	glm::vec2 getLinearVelocity();
 
 private:
