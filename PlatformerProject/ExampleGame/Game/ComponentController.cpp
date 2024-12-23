@@ -5,10 +5,12 @@
 
 #include "Engine/MyEngine.h"
 #include "Engine/Components/ComponentPhysicsBody.h"
+#include "Engine/Components/ComponentSoundSystem.h"
 #include "ComponentPlatform.h"
 
 #include "ComponentPlatformBounce.h"
 #include "ComponentJetpack.h"
+#include "ComponentSound.h"
 
 
 void ComponentController::Init(rapidjson::Value& serializedData) {
@@ -58,12 +60,27 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 	if (other == nullptr) {
 		return;
 	}
+	//Get engine for handling platform destruction
 	auto engine = MyEngine::Engine::GetInstance();
+
+	//Get collision information
 	auto collidedBody = other->GetGameObject().lock();
 	auto collidedGameObject = collidedBody.get();
-
+	auto soundCollision = collidedBody->FindComponent<ComponentSound>().lock();
 	auto platformCollision = collidedBody->FindComponent<ComponentPlatform>().lock();
 	auto jetpackCollision = collidedBody->FindComponent<ComponentJetpack>().lock();
+
+	//Get player information and access to system components for playing SFX
+	auto playerObject = GetGameObject().lock();
+	if (soundCollision) {
+		if (!collidedBody) {
+			return;
+		}
+		auto soundSystem = playerObject->FindComponent<ComponentSoundSystem>().lock();
+		soundSystem->PlaySFX(soundCollision->GetCollisionSoundFile());
+	}
+
+	//Handle jumping and schedule platform destruction.
 	if (platformCollision) {
 		if (!collidedBody) {
 			return;
@@ -74,19 +91,14 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 			return;
 		}
 	  }
-	  if (jetpackCollision) {
+	if (jetpackCollision) {
 		if (!collidedBody) {
-		  return;
+			return;
 		}
 		engine->RegisterForDestruction(collidedGameObject);
 		_jetpack = true;
-		}
+	}
 	
-	/*bool bunnyAbove = collidedBody->GetPosition().y < GetGameObject().lock()->GetPosition().y;
-	float impactDirection = abs(manifold->localNormal.y) * (bunnyAbove*2-1);
-	if (impactDirection > .99)
-	
-		_grounded = true;*/
 }
 
 void ComponentController::OnCollisionEnd(ComponentPhysicsBody* other, b2Manifold* manifold) {

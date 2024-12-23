@@ -29,7 +29,8 @@ void ComponentSoundSystem::PlayMusic() {
 	std::cout << "Playing music";
 }
 
-void ComponentSoundSystem::PlaySFX(Mix_Chunk* sound_file) {
+void ComponentSoundSystem::PlaySFX(std::string sound_file_name) {
+	Mix_Chunk* sound_file = Mix_LoadWAV(sound_file_name.c_str());
 	Mix_PlayChannel(
 		-1, // int channel to play on (-1 is first available)
 		sound_file, // Mix_Chunk* chunk to play

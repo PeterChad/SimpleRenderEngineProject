@@ -13,6 +13,6 @@ public:
 	void Init(rapidjson::Value& serializedData);
 	void LoadMusic();
 	void PlayMusic();
-	void PlaySFX(Mix_Chunk* sound_file);
+	void PlaySFX(std::string sound_file_name);
 };
 

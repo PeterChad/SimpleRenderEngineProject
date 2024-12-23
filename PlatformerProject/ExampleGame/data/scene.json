@@ -9,27 +9,11 @@
 		"components": [],
 		"children": [
 			{
-				"name": "Sound_system",
-				"transform": {
-					"position": [ 0, 0, 0 ],
-					"rotation": [ 0, 0, 0 ],
-					"scale": [ 0, 0, 1 ]
-				},
-				"components": [
-					{
-						"typeId": "SOUND_SYSTEM",
-						"serializedData": {
-							"channels": 2
-						}
-					}
-				]
-			},
-			{
 				"name": "Jetpack0",
 				"transform": {
-					"position": [ 80, 400, 0 ],
+					"position": [ 300, 140, 0 ],
 					"rotation": [ 0, 0, 0 ],
-					"scale": [ 0.15, 0.15, 1 ]
+					"scale": [ 1, 1, 1 ]
 				},
 				"components": [
 					{
@@ -43,6 +27,12 @@
 						"typeId": "JETPACK",
 						"serializedData": {
 							"size": 8
+						}
+					},
+					{
+						"typeId": "COLLISION_SOUND",
+						"serializedData": {
+							"sound_file": "data/750234__universfield__blaster-shot.mp3"
 						}
 					}
 				]
@@ -193,6 +183,12 @@
 						"serializedData": {
 							"movSpeed": 1,
 							"jumpStrength": 3
+						}
+					},
+					{
+						"typeId": "SOUND_SYSTEM",
+						"serializedData": {
+							"channels": 2
 						}
 					}
 				],
