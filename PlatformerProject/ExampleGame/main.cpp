@@ -12,6 +12,7 @@
 #include "Game/ComponentJetpack.h"
 #include "Game/PlatformManager.h"
 #include "Game/ComponentSound.h"
+#include "Game/ComponentPoints.h"
 
 MyEngine::Engine engine;
 
@@ -25,6 +26,7 @@ int main() {
 	MyEngine::ComponentFactory::RegisterComponentOfType("JETPACK", []() { return std::make_shared<ComponentJetpack>(); });
 	MyEngine::ComponentFactory::RegisterComponentOfType("PLATFORM_MANAGER", []() { return std::make_shared<PlatformManager>(); });
 	MyEngine::ComponentFactory::RegisterComponentOfType("COLLISION_SOUND", []() { return std::make_shared<ComponentSound>(); });
+	MyEngine::ComponentFactory::RegisterComponentOfType("POINT_COUNTER", []() { return std::make_shared<ComponentPoints>(); });
 	
 	engine.Init("data/scene.json");
 }

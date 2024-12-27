@@ -190,6 +190,12 @@
 						"serializedData": {
 							"channels": 2
 						}
+					},
+					{
+						"typeId": "POINT_COUNTER",
+						"serializedData": {
+							
+						}
 					}
 				],
 				"children": []
