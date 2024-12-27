@@ -32,7 +32,8 @@
 					{
 						"typeId": "COLLISION_SOUND",
 						"serializedData": {
-							"sound_file": "data/750234__universfield__blaster-shot.mp3"
+							"sound_file": "data/750234__universfield__blaster-shot.mp3",
+							"sound_volume": 45
 						}
 					}
 				]
@@ -84,7 +85,8 @@
 					{
 						"typeId": "COLLISION_SOUND",
 						"serializedData": {
-							"sound_file": "data/350903__cabled_mess__jump_c_03.wav"
+							"sound_file": "data/350903__cabled_mess__jump_c_03.wav",
+							"sound_volume": 85
 						}
 					}
 				]
@@ -103,6 +105,13 @@
 							"size": 1,
 							"type": 0,
 							"bouncy": true
+						}
+					},
+					{
+						"typeId": "COLLISION_SOUND",
+						"serializedData": {
+							"sound_file": "data/iceplatformcrack.mp3",
+							"sound_volume":  55
 						}
 					}
 				]

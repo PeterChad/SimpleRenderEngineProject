@@ -36,19 +36,21 @@ void ComponentSoundSystem::LoadMusic() {
 }
 
 void ComponentSoundSystem::PlayMusic() {
-	int playing = Mix_PlayMusic(music_file, 0);
+	Mix_VolumeMusic(50);
+	int playing = Mix_PlayMusic(music_file, -1); //Should loop it infinitely
 	if (!music_file) {
 		std::cout << "Music Error: " << Mix_GetError();
 	}
 	std::cout << "Playing music";
 }
 
-void ComponentSoundSystem::PlaySFX(std::string sound_file_name) {
+void ComponentSoundSystem::PlaySFX(std::string sound_file_name, int volume) {
 	Mix_Chunk* sound_file = Mix_LoadWAV(sound_file_name.c_str());
+	Mix_VolumeChunk(sound_file, volume);
 	int channel = Mix_PlayChannel(
 		-1, // int channel to play on (-1 is first available)
-		sound_file, // Mix_Chunk* chunk to play
-		0 // int number loops
+		sound_file,
+		0 
 	);
 
 	activeSounds[channel] = sound_file;

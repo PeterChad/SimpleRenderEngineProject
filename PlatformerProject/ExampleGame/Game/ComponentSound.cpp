@@ -1,9 +1,14 @@
 #include "ComponentSound.h"
 
 void ComponentSound::Init(rapidjson::Value& serializedData) {
-	collisionSoundFile = serializedData["sound_file"].GetString();
+	_collisionSoundFile = serializedData["sound_file"].GetString();
+	_soundVolume = serializedData["sound_volume"].GetInt();
 }
 
 std::string ComponentSound::GetCollisionSoundFile() {
-	return collisionSoundFile;
+	return _collisionSoundFile;
+}
+
+int ComponentSound::GetCollisionSoundVolume() {
+	return _soundVolume;
 }

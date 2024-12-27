@@ -91,7 +91,7 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 			return;
 		}
 		auto soundSystem = playerObject->FindComponent<ComponentSoundSystem>().lock();
-		soundSystem->PlaySFX(soundCollision->GetCollisionSoundFile());
+		soundSystem->PlaySFX(soundCollision->GetCollisionSoundFile(), soundCollision->GetCollisionSoundVolume());
 	}
 
 	//Handle jumping and schedule platform destruction.
