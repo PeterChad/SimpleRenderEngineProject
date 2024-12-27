@@ -157,10 +157,12 @@
 				},
 				"components": [
 					{
-						"typeId": "SPRITE_RENDERER",
+						"typeId": "PLAYER_ANIMATOR",
 						"serializedData": {
 							"atlas": "bunny-art",
-							"sprite": "bunny1_ready.png"
+							"sprite_falling": "bunny1_jump.png",
+							"sprite_jumping": "bunny1_ready.png",
+							"sprite_dead": "bunny1_hurt.png"
 						}
 					},
 					{
