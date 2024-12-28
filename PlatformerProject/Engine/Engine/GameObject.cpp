@@ -138,7 +138,8 @@ namespace MyEngine {
 		};
 	}
 
-	//doesn't update in the physics sim, only the sprite
+	//doesn't update in the physics sim, only the sprite.
+	//fixed -peter
 	void GameObject::SetPosition(glm::vec3 position) {
 		transform[3][0] = position[0];
 		transform[3][1] = position[1];
