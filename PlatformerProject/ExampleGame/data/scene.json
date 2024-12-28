@@ -229,7 +229,7 @@
 						"typeId": "CAMERA",
 						"serializedData": {
 							"projectionType": 0,
-							"projectionParams": [ 400, -1, 1 ]
+							"projectionParams": [ 450, -1, 1 ]
 						}
 					},
 					{
