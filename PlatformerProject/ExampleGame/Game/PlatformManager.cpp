@@ -22,10 +22,20 @@ void PlatformManager::Update(float deltaTime) {
 		if (!platformPtr) return;
 
 		glm::vec2 screenSize = MyEngine::Engine::GetInstance()->GetScreenSize();
-		int spawnPositionX = rand() % (int)screenSize.x - screenSize.x/2;
-		int spawnPositionY = _playerMaxHeight + (int)screenSize.y/2+100;
+
+		// Adjust spawn position to ensure at least 50 % visibility
+		int platformWidth = 380; // Assuming platform width is 380, adjust based on actual platform size
+		int halfWidth = platformWidth / 2;
+
+		// Limit the range of spawnPositionX
+		int minX = -((int)screenSize.x / 2) + halfWidth;
+		int maxX = ((int)screenSize.x / 2) - halfWidth;
+
+		int spawnPositionX = rand() % (maxX - minX + 1) + minX;
+		int spawnPositionY = _playerMaxHeight + (int)screenSize.y / 2 + 100;
 
 		bool isBouncy = rand() % 100 < 35;
+		bool isMoving = rand() % 100 < 10;
 		rapidjson::Document platformSpawnParameters;
 		std::stringstream ss;
 		ss << "{";
@@ -44,6 +54,8 @@ void PlatformManager::Update(float deltaTime) {
 		ss <<				"\"bouncy\": " << (isBouncy ? "true" : "false") << "";
 		ss <<			"}";
 		ss <<		"}";
+		ss << ",{\"typeId\": \"COLLISION_SOUND\",\"serializedData\": { \"sound_file\": " << (isBouncy ? "\"data/iceplatformcrack.mp3\", \"sound_volume\": 55}" : "\"data/350903__cabled_mess__jump_c_03.wav\", \"sound_volume\": 85}") << "}";
+		ss <<			"" << (isMoving ? ",{\"typeId\": \"PLATFORM_MOVER\", \"serializedData\" : {\"yoyo\": true, \"duration\" : 2.0, \"start\" : [0, 0, 0] , \"end\" : [200, 0, 0] , \"easing\" : 2}}" : "");
 		ss <<	"]";
 		ss << "}";
 		platformSpawnParameters.Parse(ss.str().c_str());

@@ -108,10 +108,20 @@
 						}
 					},
 					{
+						"typeId": "PLATFORM_MOVER",
+						"serializedData": {
+							"yoyo": true,
+							"duration": 2.0,
+							"start": [ 0, 0, 0 ],
+							"end": [ 0, -150, 0 ],
+							"easing": 2
+						}
+					},
+					{
 						"typeId": "COLLISION_SOUND",
 						"serializedData": {
 							"sound_file": "data/iceplatformcrack.mp3",
-							"sound_volume":  55
+							"sound_volume": 55
 						}
 					}
 				]
