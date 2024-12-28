@@ -22,7 +22,6 @@ void ComponentRendererSprite::Render(sre::RenderPass& renderPass) {
 	if (!gameObject)
 		return;
 
-	// TODO cache builder at engine level and call draw() one time at the end of render calls
 	auto builder = sre::SpriteBatch::create();
 	builder.addSprite(_sprite);
 	auto batch = builder.build();
