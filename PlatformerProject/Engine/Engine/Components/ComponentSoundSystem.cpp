@@ -5,8 +5,8 @@
 std::map<int, Mix_Chunk*> activeSounds;
 void ChannelFinishedCallback(int channel) {
 	if (activeSounds.find(channel) != activeSounds.end()) {
-		Mix_FreeChunk(activeSounds[channel]); // Free the sound chunk
-		activeSounds.erase(channel);          // Remove from the active sounds map
+		Mix_FreeChunk(activeSounds[channel]); // Free the sound chunk (should alleviate our memory leak issue)
+		activeSounds.erase(channel);          // Fix schedule basically
 	}
 }
 
@@ -37,7 +37,7 @@ void ComponentSoundSystem::LoadMusic() {
 
 void ComponentSoundSystem::PlayMusic() {
 	Mix_VolumeMusic(50);
-	int playing = Mix_PlayMusic(music_file, -1); //Should loop it infinitely
+	int playing = Mix_PlayMusic(music_file, -1); //Should loop it infinitely?
 	if (!music_file) {
 		std::cout << "Music Error: " << Mix_GetError();
 	}

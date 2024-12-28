@@ -9,7 +9,7 @@
 #include "Component.h"
 #include "ComponentFactory.h"
 #include "Logger.h"
-#include "ExtraMath.h"
+#include "QuaternionsSafe.h"
 
 namespace MyEngine {
 	// public API
