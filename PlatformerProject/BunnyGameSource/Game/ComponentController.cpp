@@ -29,6 +29,11 @@ void ComponentController::Update(float deltaTime) {
 	linearVelocity.x = _mov.x * _movSpeed;
 	body->setLinearVelocity(linearVelocity);
 
+	HandleJump(body);
+	ScreenEdgePan(body);
+}
+
+void ComponentController::HandleJump(std::shared_ptr<ComponentPhysicsBody> body) {
 	if (_jump) {
 		body->addImpulse(glm::vec2(0, _jumpStrength));
 		_jump = false;
@@ -38,8 +43,10 @@ void ComponentController::Update(float deltaTime) {
 		body->addImpulse(glm::vec2(0, _jetpackStrength));
 		_jetpack = false;
 	}
+}
 
-	//using hardcoded values, should probably fit to screen size given time.
+void ComponentController::ScreenEdgePan(std::shared_ptr<ComponentPhysicsBody> body) {
+	//using hardcoded values, should fit to screen size given time.
 	auto playerObject = body->GetGameObject().lock();
 	glm::vec3 currentPos = playerObject->GetPosition();
 	if (currentPos[0] < -235) {
@@ -55,9 +62,6 @@ void ComponentController::Update(float deltaTime) {
 }
 
 void ComponentController::KeyEvent(SDL_Event& event) {
-
-
-	// movement
 	switch (event.key.keysym.sym) {
 		case SDLK_a: {
 			if (event.type == SDL_KEYDOWN) {

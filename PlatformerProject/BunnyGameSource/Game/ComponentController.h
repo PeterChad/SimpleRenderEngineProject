@@ -9,6 +9,8 @@ class ComponentController : public MyEngine::Component {
 	void KeyEvent(SDL_Event&) override;
 	void OnCollisionStart(ComponentPhysicsBody* other, b2Manifold* manifold) override;
 	void OnCollisionEnd(ComponentPhysicsBody* other, b2Manifold* manifold) override;
+	void ScreenEdgePan(std::shared_ptr<ComponentPhysicsBody> body);
+	void HandleJump(std::shared_ptr<ComponentPhysicsBody> body);
 
 private:
 	std::weak_ptr<ComponentPhysicsBody> _body;
