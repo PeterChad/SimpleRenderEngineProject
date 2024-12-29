@@ -20,11 +20,11 @@ public:
 	void setLinearVelocity(glm::vec2 velocity);
 	void setPosition(glm::vec3);
 	glm::vec2 getLinearVelocity();
+	b2Fixture* _fixture = nullptr;
 
 private:
 	b2World* _world;
 	b2Body* _body = nullptr;
-	b2Fixture* _fixture = nullptr;
 	b2PolygonShape* _shape = nullptr;
 
 	static glm::vec2 DeserializeVector2(rapidjson::Value& vectorData);

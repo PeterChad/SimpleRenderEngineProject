@@ -149,13 +149,19 @@ namespace MyEngine {
 	}
 
 	void Engine::DeregisterPhysicsComponent(ComponentPhysicsBody* body) {
+		if (!body) {
+			return;
+		}
+		//std::string name = body->GetGameObject().lock()->GetName();
 		_b2World->DestroyBody(body->_body);
+		//std::cout << name << std::endl;
 		auto iter = _physicsLookup.find(body->_fixture);
 		if (iter != _physicsLookup.end())
 			_physicsLookup.erase(iter);
 	}
 
 	std::weak_ptr<GameObject> Engine::CreateGameObject(std::string name) {
+		//std::cout << "Created this GO: " << name << std::endl;
 		assert(_gameObjects.find(name) == _gameObjects.end() && "Cannot create two objects with same name");
 
 		auto ret = std::make_shared<GameObject>();
@@ -235,18 +241,29 @@ namespace MyEngine {
 		}
 	}
 
+	void Engine::RegisterObject(GameObject* gameObject) {
+		objectHolder.push_back(gameObject);
+	}
+
+	void Engine::Reset() {
+		for (auto* body : objectHolder) {
+			RegisterForDestruction(body);
+		}
+	}
+
 	void Engine::RegisterForDestruction(GameObject* gameObject) {
 		destructionQueue.push_back(gameObject);
 	}
 
 	void Engine::DestroyQueuedBodies() {
-		for (auto* object : destructionQueue) {
-			if (object == nullptr) {
+		for (auto* body : destructionQueue) {
+			if (body == nullptr) {
 				continue;
 			}
-			auto cpb = object->FindComponent<ComponentPhysicsBody>().lock().get();
+			objectHolder.erase(std::remove(objectHolder.begin(), objectHolder.end(), body),objectHolder.end());
+			auto cpb = body->FindComponent<ComponentPhysicsBody>().lock().get();
 			DeregisterPhysicsComponent(cpb);
-			DestroyGameObject(object);
+			DestroyGameObject(body);
 		}
 		destructionQueue.clear();
 	}

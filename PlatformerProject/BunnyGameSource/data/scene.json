@@ -9,39 +9,9 @@
 		"components": [],
 		"children": [
 			{
-				"name": "Jetpack0",
+				"name": "Floor0",
 				"transform": {
-					"position": [ 300, 140, 0 ],
-					"rotation": [ 0, 0, 0 ],
-					"scale": [ 1, 1, 1 ]
-				},
-				"components": [
-					{
-						"typeId": "SPRITE_RENDERER",
-						"serializedData": {
-							"atlas": "bunny-art",
-							"sprite": "jetpack.png"
-						}
-					},
-					{
-						"typeId": "JETPACK",
-						"serializedData": {
-							"size": 8
-						}
-					},
-					{
-						"typeId": "COLLISION_SOUND",
-						"serializedData": {
-							"sound_file": "data/750234__universfield__blaster-shot.mp3",
-							"sound_volume": 45
-						}
-					}
-				]
-			},
-			{
-				"name": "Floor",
-				"transform": {
-					"position": [ 100, 84, 0 ],
+					"position": [ -150, 84, 0 ],
 					"rotation": [ 0, 0, 0 ],
 					"scale": [ 0.5, 0.5, 0.5 ]
 				},
@@ -50,32 +20,6 @@
 						"typeId": "PLATFORM_BUILDER",
 						"serializedData": {
 							"bouncy": false
-						}
-					}
-				]
-			},
-			{
-				"name": "Platform0",
-				"transform": {
-					"position": [ 0, 252, 0 ],
-					"rotation": [ 0, 0, 0 ],
-					"scale": [ 0.5, 0.5, 0.5 ]
-				},
-				"components": [
-					{
-						"typeId": "PLATFORM_BUILDER",
-						"serializedData": {
-							"bouncy": false
-						}
-					},
-					{
-						"typeId": "PLATFORM_MOVER",
-						"serializedData": {
-							"yoyo": true,
-							"duration": 2.0,
-							"start": [ 0, 0, 0 ],
-							"end": [ 0, -150, 0 ],
-							"easing": 2
 						}
 					},
 					{
@@ -88,7 +32,76 @@
 				]
 			},
 			{
-				"name": "Platform2",
+				"name": "Floor1",
+				"transform": {
+					"position": [ 40, 84, 0 ],
+					"rotation": [ 0, 0, 0 ],
+					"scale": [ 0.5, 0.5, 0.5 ]
+				},
+				"components": [
+					{
+						"typeId": "PLATFORM_BUILDER",
+						"serializedData": {
+							"bouncy": false
+						}
+					},
+					{
+						"typeId": "COLLISION_SOUND",
+						"serializedData": {
+							"sound_file": "data/350903__cabled_mess__jump_c_03.wav",
+							"sound_volume": 85
+						}
+					}
+				]
+			},
+			{
+				"name": "Floor2",
+				"transform": {
+					"position": [ 230, 84, 0 ],
+					"rotation": [ 0, 0, 0 ],
+					"scale": [ 0.5, 0.5, 0.5 ]
+				},
+				"components": [
+					{
+						"typeId": "PLATFORM_BUILDER",
+						"serializedData": {
+							"bouncy": false
+						}
+					},
+					{
+						"typeId": "COLLISION_SOUND",
+						"serializedData": {
+							"sound_file": "data/350903__cabled_mess__jump_c_03.wav",
+							"sound_volume": 85
+						}
+					}
+				]
+			},
+			{
+				"name": "Floor3",
+				"transform": {
+					"position": [ 420, 84, 0 ],
+					"rotation": [ 0, 0, 0 ],
+					"scale": [ 0.5, 0.5, 0.5 ]
+				},
+				"components": [
+					{
+						"typeId": "PLATFORM_BUILDER",
+						"serializedData": {
+							"bouncy": false
+						}
+					},
+					{
+						"typeId": "COLLISION_SOUND",
+						"serializedData": {
+							"sound_file": "data/350903__cabled_mess__jump_c_03.wav",
+							"sound_volume": 85
+						}
+					}
+				]
+			},
+			{
+				"name": "Platform0",
 				"transform": {
 					"position": [ 300, 252, 0 ],
 					"rotation": [ 0, 0, 0 ],
@@ -98,7 +111,7 @@
 					{
 						"typeId": "PLATFORM_BUILDER",
 						"serializedData": {
-							"bouncy": true
+							"bouncy": false
 						}
 					},
 					{
@@ -107,15 +120,15 @@
 							"yoyo": true,
 							"duration": 2.0,
 							"start": [ 0, 0, 0 ],
-							"end": [ 0, -150, 0 ],
+							"end": [ 0, 350, 0 ],
 							"easing": 2
 						}
 					},
 					{
 						"typeId": "COLLISION_SOUND",
 						"serializedData": {
-							"sound_file": "data/iceplatformcrack.mp3",
-							"sound_volume": 55
+							"sound_file": "data/350903__cabled_mess__jump_c_03.wav",
+							"sound_volume": 85
 						}
 					}
 				]
@@ -209,13 +222,13 @@
 					{
 						"typeId": "SOUND_SYSTEM",
 						"serializedData": {
-							
+
 						}
 					},
 					{
 						"typeId": "POINT_COUNTER",
 						"serializedData": {
-							
+
 						}
 					}
 				],

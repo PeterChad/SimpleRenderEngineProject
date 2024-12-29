@@ -12,6 +12,8 @@ public:
 	virtual void Render(sre::RenderPass& renderPass) override;
 	void Update(float deltaTime) override;
 	void SetSpritePosition(glm::vec2& position);
+	void ToggleDeath();
+	bool isDead = false;
 
 protected:
 	sre::Sprite _spriteCurrent;

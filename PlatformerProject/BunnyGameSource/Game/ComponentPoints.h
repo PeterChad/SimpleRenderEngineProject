@@ -11,4 +11,5 @@ class ComponentPoints : public MyEngine::Component {
 	public:
 		virtual void Init(rapidjson::Value& serializedData) override;
 		void Update(float deltaTime) override;
+		int GetPoints() { return points;}
 };

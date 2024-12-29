@@ -22,11 +22,16 @@ void ComponentAnimator::Update(float deltaTime) {
 	auto body = gameObject->FindComponent<ComponentPhysicsBody>().lock();
 	glm::vec2 currentVelocity = body->getLinearVelocity();
 
-	if (currentVelocity[1] > 0) {
-		_spriteCurrent = _spriteJumping;
+	if (!isDead) {
+		if (currentVelocity[1] > 0) {
+			_spriteCurrent = _spriteJumping;
+		}
+		else {
+			_spriteCurrent = _spriteFalling;
+		}
 	}
 	else {
-		_spriteCurrent = _spriteFalling;
+		_spriteCurrent = _spriteDead;
 	}
 }
 
@@ -43,4 +48,8 @@ void ComponentAnimator::Render(sre::RenderPass& renderPass) {
 
 void ComponentAnimator::SetSpritePosition(glm::vec2& pivot) {
 	_spriteCurrent.setPosition(pivot);
+}
+
+void ComponentAnimator::ToggleDeath() {
+	isDead = !isDead;
 }

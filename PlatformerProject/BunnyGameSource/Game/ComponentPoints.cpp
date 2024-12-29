@@ -16,7 +16,7 @@ void ComponentPoints::Update(float deltaTime) {
 	if (currentHeight > bestHeight) {
 		points += (currentHeight - bestHeight);
 		bestHeight = currentHeight;
-		std::cout << points << std::endl;
+		//std::cout << points << std::endl;
 	}
 
 }
