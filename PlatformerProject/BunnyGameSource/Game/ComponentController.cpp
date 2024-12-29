@@ -59,8 +59,24 @@ void ComponentController::KeyEvent(SDL_Event& event) {
 
 	// movement
 	switch (event.key.keysym.sym) {
-		case SDLK_a: _mov.x = -(event.type == SDL_KEYDOWN); break;
-		case SDLK_d: _mov.x = +(event.type == SDL_KEYDOWN); break;
+		case SDLK_a: {
+			if (event.type == SDL_KEYDOWN) {
+				_mov.x = -1;
+			}
+			if (event.type == SDL_KEYUP && _mov.x < 0) { 
+				_mov.x = 0;
+			}
+			break; 
+			}
+		case SDLK_d: {
+			if (event.type == SDL_KEYDOWN) {
+				_mov.x = 1;
+			}
+			if (event.type == SDL_KEYUP && _mov.x > 0) {
+				_mov.x = 0;
+			}
+			break;
+		}
 	}
 
 }
