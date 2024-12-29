@@ -16,7 +16,6 @@ private:
 	std::weak_ptr<ComponentPhysicsBody> _body;
 	glm::vec3 _mov;
 	bool _jump;
-	bool _grounded;
 	bool _jetpack;
 
 	float _movSpeed = 2;

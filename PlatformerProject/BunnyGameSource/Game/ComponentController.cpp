@@ -46,7 +46,6 @@ void ComponentController::HandleJump(std::shared_ptr<ComponentPhysicsBody> body)
 }
 
 void ComponentController::ScreenEdgePan(std::shared_ptr<ComponentPhysicsBody> body) {
-	//using hardcoded values, should fit to screen size given time.
 	auto playerObject = body->GetGameObject().lock();
 	glm::vec3 currentPos = playerObject->GetPosition();
 	if (currentPos[0] < -235) {
@@ -134,8 +133,5 @@ void ComponentController::OnCollisionEnd(ComponentPhysicsBody* other, b2Manifold
 	if (other == nullptr || manifold == nullptr) {
 		return;
 	}
-	if (manifold->localNormal.y > .99)
-		_grounded = false;
-
-	
+	return;
 }
