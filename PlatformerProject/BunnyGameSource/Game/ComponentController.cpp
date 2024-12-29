@@ -63,10 +63,6 @@ void ComponentController::KeyEvent(SDL_Event& event) {
 		case SDLK_d: _mov.x = +(event.type == SDL_KEYDOWN); break;
 	}
 
-	// jump
-	if (_grounded && event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
-		_jump = true;
-
 }
 
 void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifold* manifold) {
