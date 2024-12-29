@@ -5,18 +5,30 @@
 
 void ComponentPoints::Init(rapidjson::Value& serializedData) {
 	playerObject = GetGameObject().lock();
-	points = 0;
-	bestHeight = playerObject->GetPosition()[1];
-	currentHeight = bestHeight;
+	_bestPoints = 0;
+	_bestHeight = playerObject->GetPosition()[1];
+	_currentHeight = _bestHeight;
 }
 
 void ComponentPoints::Update(float deltaTime) {
-	currentHeight = playerObject->GetPosition()[1];
+	_currentHeight = playerObject->GetPosition()[1];
 
-	if (currentHeight > bestHeight) {
-		points += (currentHeight - bestHeight);
-		bestHeight = currentHeight;
+	if (_currentHeight > _bestHeight) {
+		_currentBest += (_currentHeight - _bestHeight);
+		_bestHeight = _currentHeight;
 		//std::cout << points << std::endl;
 	}
 
+	if (_currentBest > _bestPoints) {
+		_bestPoints = _currentBest;
+	}
+
+}
+
+void ComponentPoints::Render(sre::RenderPass& renderPass) {
+	ImGui::SetNextWindowSize(ImVec2(300, 150));
+	ImGui::Begin("Points");
+	ImGui::Text("High Score: %i", _bestPoints);
+	ImGui::Text("Current Score: %i", _currentBest);
+	ImGui::End();
 }

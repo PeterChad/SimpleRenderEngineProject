@@ -70,12 +70,11 @@ void ComponentController::Update(float deltaTime) {
 		// Change the sprite to the hurt animation
 		_animator.lock()->ToggleDeath();
 
-		auto points = playerObject->FindComponent<ComponentPoints>().lock();
 		// Display game over information to the player
 		std::cout << "\nGame Over! Fell too far!" << std::endl;
 		std::cout << "Fell " << (_playerMaxHeight - currentPos[1]) << " units" << std::endl;
 		std::cout << "Time: " << _gameTime << " seconds" << std::endl;
-		std::cout << "Current best: " << points->GetPoints() << " points!!" << std::endl;
+		std::cout << "Current best: "  << " points!!" << std::endl;
 		std::cout << "Press R to restart" << std::endl;
 		return;
 	}
@@ -201,8 +200,8 @@ void ComponentController::Reset() {
 	if (!body) return;
 
 	// Get the game object this controller is attached to
-	auto gameObject = GetGameObject().lock();
-	if (!gameObject) return;
+	auto playerObject = GetGameObject().lock();
+	if (!playerObject) return;
 
 	// Clean up all platforms first
 	auto platformManager = GetGameObject().lock()->FindComponent<PlatformManager>().lock();
@@ -212,12 +211,12 @@ void ComponentController::Reset() {
 
 	// Reset position to starting point
 	glm::vec3 startPos(100, 300, 0);
-	gameObject->SetPosition(startPos);
+	playerObject->SetPosition(startPos);
 	body->setPosition(startPos);
 	body->setLinearVelocity(glm::vec2(0, 0));
 
 	// Reset physics body's sensor state to enable collisions again
-	auto physicsBody = gameObject->FindComponent<ComponentPhysicsBody>().lock();
+	auto physicsBody = playerObject->FindComponent<ComponentPhysicsBody>().lock();
 	if (physicsBody) {
 		physicsBody->_fixture->SetSensor(false);
 	}
@@ -235,4 +234,6 @@ void ComponentController::Reset() {
 	_mov = glm::vec3(0);
 	_jump = false;
 	_jetpack = false;
+	auto points = playerObject->FindComponent<ComponentPoints>().lock();
+	points->ResetPoints();
 }
