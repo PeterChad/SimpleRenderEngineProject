@@ -11,10 +11,7 @@ public:
 	virtual void Init(rapidjson::Value& serializedData) override;
 	virtual void Render(sre::RenderPass& renderPass) override;
 	void Update(float deltaTime) override;
-
-	sre::Sprite* GetSprite() { return &_spriteCurrent; }
 	void SetSpritePosition(glm::vec2& position);
-	std::weak_ptr<ComponentPhysicsBody> _body;
 
 protected:
 	sre::Sprite _spriteCurrent;
