@@ -41,7 +41,6 @@ void ComponentSoundSystem::PlayMusic() {
 	if (!music_file) {
 		std::cout << "Music Error: " << Mix_GetError();
 	}
-	std::cout << "Playing music";
 }
 
 void ComponentSoundSystem::PlaySFX(std::string sound_file_name, int volume) {
