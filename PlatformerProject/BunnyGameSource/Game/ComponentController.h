@@ -18,7 +18,7 @@ private:
 	bool _jump;
 	bool _jetpack;
 
-	float _movSpeed = 2;
+	float _movSpeed = 3;
 	float _jumpStrength = 5;
 	float _jetpackStrength = 7;
 };
