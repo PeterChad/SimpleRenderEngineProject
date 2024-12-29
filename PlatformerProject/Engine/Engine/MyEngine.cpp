@@ -247,13 +247,13 @@ namespace MyEngine {
 	}
 
 	void Engine::DestroyQueuedBodies() {
-		for (auto* body : destructionQueue) {
-			if (body == nullptr) {
+		for (auto* object : destructionQueue) {
+			if (object == nullptr) {
 				continue;
 			}
-			auto cpb = body->FindComponent<ComponentPhysicsBody>().lock().get();
+			auto cpb = object->FindComponent<ComponentPhysicsBody>().lock().get();
 			DeregisterPhysicsComponent(cpb);
-			DestroyGameObject(body);
+			DestroyGameObject(object);
 		}
 		destructionQueue.clear();
 	}

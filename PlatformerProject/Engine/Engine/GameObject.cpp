@@ -164,7 +164,6 @@ namespace MyEngine {
 		currScale[2] = 1 / currScale[2];
 
 		// we first undo the current scale, then apply the new one
-		// (not pretty, but gets the job done)
 		transform = glm::scale(scale) * glm::scale(currScale) * transform;
 	}
 

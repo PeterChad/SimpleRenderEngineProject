@@ -93,7 +93,7 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 		soundSystem->PlaySFX(soundCollision->GetCollisionSoundFile(), soundCollision->GetCollisionSoundVolume());
 	}
 
-	//Handle jumping and schedule platform destruction.
+	//Handle jumping and schedule object destruction.
 	if (platformCollision) {
 		if (!collidedBody) {
 			return;
@@ -104,7 +104,7 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 			return;
 		}
 	  }
-	if (jetpackCollision) {
+	else if (jetpackCollision) {
 		if (!collidedBody) {
 			return;
 		}
