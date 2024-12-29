@@ -34,7 +34,7 @@ void PlatformManager::Update(float deltaTime) {
 		int spawnPositionX = rand() % (maxX - minX + 1) + minX;
 		int spawnPositionY = _playerMaxHeight + (int)screenSize.y / 2 + 100;
 
-		bool isBouncy = rand() % 100 < 35;
+		bool isPorous = rand() % 100 < 35;
 		bool isMoving = rand() % 100 < 10;
 		rapidjson::Document platformSpawnParameters;
 		std::stringstream ss;
@@ -51,10 +51,10 @@ void PlatformManager::Update(float deltaTime) {
 		ss <<			"\"serializedData\" : {";
 		ss <<				"\"size\": 1,";
 		ss <<				"\"type\" : 0,";
-		ss <<				"\"bouncy\": " << (isBouncy ? "true" : "false") << "";
+		ss <<				"\"bouncy\": " << (isPorous ? "true" : "false") << "";
 		ss <<			"}";
 		ss <<		"}";
-		ss << ",{\"typeId\": \"COLLISION_SOUND\",\"serializedData\": { \"sound_file\": " << (isBouncy ? "\"data/iceplatformcrack.mp3\", \"sound_volume\": 55}" : "\"data/350903__cabled_mess__jump_c_03.wav\", \"sound_volume\": 85}") << "}";
+		ss << ",{\"typeId\": \"COLLISION_SOUND\",\"serializedData\": { \"sound_file\": " << (isPorous ? "\"data/iceplatformcrack.mp3\", \"sound_volume\": 55}" : "\"data/350903__cabled_mess__jump_c_03.wav\", \"sound_volume\": 85}") << "}";
 		ss <<			"" << (isMoving ? ",{\"typeId\": \"PLATFORM_MOVER\", \"serializedData\" : {\"yoyo\": true, \"duration\" : 2.0, \"start\" : [0, 0, 0] , \"end\" : [200, 0, 0] , \"easing\" : 2}}" : "");
 		ss <<	"]";
 		ss << "}";

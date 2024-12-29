@@ -111,7 +111,7 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 			return;
 		}
 		_jump = true;
-		if (platformCollision->_bouncy) {
+		if (platformCollision->porous) {
 			engine->RegisterForDestruction(collidedGameObject);
 			return;
 		}
