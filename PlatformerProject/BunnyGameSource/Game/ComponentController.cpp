@@ -11,7 +11,6 @@
 #include "ComponentJetpack.h"
 #include "ComponentSound.h"
 #include "PlatformManager.h"
-#include "ComponentPoints.h"
 
 
 void ComponentController::Init(rapidjson::Value& serializedData) {
@@ -30,12 +29,11 @@ void ComponentController::Update(float deltaTime) {
 	auto playerObject = GetGameObject().lock();
 	if (!playerObject)
 		return;
-
+	_points = playerObject->FindComponent<ComponentPoints>();
 	if (_isDead) {
-		// Ensure the physics body stays in sensor mode while dead
-		auto physicsBody = GetGameObject().lock()->FindComponent<ComponentPhysicsBody>().lock();
-		if (physicsBody) {
-			physicsBody->_fixture->SetSensor(true);
+		// Ensure the physics body stays in sensor mode while dead;
+		if (body) {
+			body->_fixture->SetSensor(true);
 		}
 		return;
 	}
@@ -48,18 +46,18 @@ void ComponentController::Update(float deltaTime) {
 	HandleJump(body);
 	ScreenEdgePan(body);
 	glm::vec3 currentPos = playerObject->GetPosition();
-	// Second check: Have we fallen too far from our highest point?
+	
+	//Check whether player has fallen too far
 	if ((_playerMaxHeight - currentPos[1]) > _maxFallDistance) {
 		// Calculate the fall distance by subtracting current Y position
 		// from the highest Y position we recorded
-		// If this difference is greater than _maxFallDistance (500 units),
+		// If this difference is greater than _maxFallDistance,
 		// then the player has fallen too far and should die
 
-		// Set the death flag
 		_isDead = true;
 
 
-		// Make the player's body a sensor so it falls through platforms
+		// Make the player's body a sensor so it falls through platforms (still triggers sound?)
 		auto physicsBody = GetGameObject().lock()->FindComponent<ComponentPhysicsBody>().lock();
 		if (physicsBody) {
 			physicsBody->_fixture->SetSensor(true);
@@ -67,16 +65,9 @@ void ComponentController::Update(float deltaTime) {
 		auto currentVel = body->getLinearVelocity();
 		body->setLinearVelocity(glm::vec2(0, currentVel.y));
 
-		// Change the sprite to the hurt animation
+		// Update other systems of death state
 		_animator.lock()->ToggleDeath();
-
-		// Display game over information to the player
-		std::cout << "\nGame Over! Fell too far!" << std::endl;
-		std::cout << "Fell " << (_playerMaxHeight - currentPos[1]) << " units" << std::endl;
-		std::cout << "Time: " << _gameTime << " seconds" << std::endl;
-		std::cout << "Current best: "  << " points!!" << std::endl;
-		std::cout << "Press R to restart" << std::endl;
-		return;
+		_points.lock()->ToggleDeath();
 	}
 }
 
@@ -113,12 +104,13 @@ void ComponentController::ScreenEdgePan(std::shared_ptr<ComponentPhysicsBody> bo
 }
 
 void ComponentController::KeyEvent(SDL_Event& event) {
-	// First check: Is the player dead and pressing R?
+	// Is the player dead and pressing R?
 	if (_isDead && event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_r) {
-		Reset();  // Call the reset function we created
-		return;   // Exit the function after handling restart
+		Reset(); 
+		return;   
 	}
 
+	//Otherwise allow movement
 	switch (event.key.keysym.sym) {
 		case SDLK_a: {
 			if (event.type == SDL_KEYDOWN) {
@@ -195,15 +187,13 @@ void ComponentController::OnCollisionEnd(ComponentPhysicsBody* other, b2Manifold
 }
 
 void ComponentController::Reset() {
-	// First get the physics body component
 	auto body = _body.lock();
 	if (!body) return;
 
-	// Get the game object this controller is attached to
 	auto playerObject = GetGameObject().lock();
 	if (!playerObject) return;
 
-	// Clean up all platforms first
+	// Clean up all platforms
 	auto platformManager = GetGameObject().lock()->FindComponent<PlatformManager>().lock();
 	if (platformManager) {
 		platformManager->CleanupPlatforms();
@@ -221,8 +211,9 @@ void ComponentController::Reset() {
 		physicsBody->_fixture->SetSensor(false);
 	}
 	
-	// Reset sprite back to ready state
+	// Reset systems back to ready state
 	_animator.lock()->ToggleDeath();
+	_points.lock()->ToggleDeath();
 
 	// Reset game state variables
 	_isDead = false;
@@ -234,6 +225,5 @@ void ComponentController::Reset() {
 	_mov = glm::vec3(0);
 	_jump = false;
 	_jetpack = false;
-	auto points = playerObject->FindComponent<ComponentPoints>().lock();
-	points->ResetPoints();
+	_points.lock()->ResetPoints();
 }

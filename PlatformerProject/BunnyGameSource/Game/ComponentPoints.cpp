@@ -26,9 +26,18 @@ void ComponentPoints::Update(float deltaTime) {
 }
 
 void ComponentPoints::Render(sre::RenderPass& renderPass) {
-	ImGui::SetNextWindowSize(ImVec2(300, 150));
-	ImGui::Begin("Points");
-	ImGui::Text("High Score: %i", _bestPoints);
-	ImGui::Text("Current Score: %i", _currentBest);
+	if (!playerDead) {
+		ImGui::SetNextWindowSize(ImVec2(175, 70));
+		ImGui::Begin("Points");
+		ImGui::Text("High Score: %i", _bestPoints);
+		ImGui::Text("Current Score: %i", _currentBest);
+	}
+	else {
+		ImGui::SetNextWindowSize(ImVec2(410, 120));
+		ImGui::Begin("You fell too far :(");
+		ImGui::Text("Falling too far makes the bunny sad, press R to restart. \n ");
+		ImGui::Text("High Score: %i", _bestPoints);
+		ImGui::Text("Current Score: %i", _currentBest);
+	}
 	ImGui::End();
 }

@@ -3,6 +3,7 @@
 #include "Engine/Component.h"
 #include "Engine/MyEngine.h"
 #include "Engine/Components/ComponentAnimator.h"
+#include "ComponentPoints.h"
 
 class ComponentController : public MyEngine::Component {
 	void Init(rapidjson::Value&) override;
@@ -15,6 +16,7 @@ class ComponentController : public MyEngine::Component {
 
 private:
 	std::weak_ptr<ComponentPhysicsBody> _body;
+	std::weak_ptr<ComponentPoints> _points;
 	std::weak_ptr<ComponentAnimator> _animator;
 	glm::vec3 _mov;
 	bool _jump;
