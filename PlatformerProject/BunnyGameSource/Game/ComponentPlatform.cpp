@@ -4,7 +4,7 @@
 #include "Engine/Components/ComponentRendererSprite.h"
 
 void ComponentPlatform::Init(rapidjson::Value& serializedData) {
-	porous = serializedData["bouncy"].GetBool();
+	porous = serializedData["porous"].GetBool();
 
 	// Get the GameObject and its scale
 	auto gameObject = GetGameObject().lock();

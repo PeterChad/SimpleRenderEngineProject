@@ -48,18 +48,12 @@ void ComponentController::Update(float deltaTime) {
 	HandleJump(body);
 	ScreenEdgePan(body);
 	glm::vec3 currentPos = playerObject->GetPosition();
-	
+
 	//Check whether player has fallen too far
 	if ((_playerMaxHeight - currentPos[1]) > _maxFallDistance) {
-		// Calculate the fall distance by subtracting current Y position
-		// from the highest Y position we recorded
-		// If this difference is greater than _maxFallDistance,
-		// then the player has fallen too far and should die
-
 		_isDead = true;
 
-
-		// Make the player's body a sensor so it falls through platforms (still triggers sound?)
+		// Make the player's body a sensor so it falls through platforms
 		auto physicsBody = GetGameObject().lock()->FindComponent<ComponentPhysicsBody>().lock();
 		if (physicsBody) {
 			physicsBody->_fixture->SetSensor(true);
@@ -70,6 +64,20 @@ void ComponentController::Update(float deltaTime) {
 		// Update other systems of death state
 		_animator.lock()->ToggleDeath();
 		_points.lock()->ToggleDeath();
+	}
+
+	// Handle jetpack timer and effect
+	if (_isJetpackActive) {
+		_jetpackTimer -= deltaTime;
+		auto velocity = body->getLinearVelocity();
+
+		// If falling (negative y velocity) or timer expired, end jetpack
+		if (_jetpackTimer <= 0 || velocity.y < 0) {
+			_isJetpackActive = false;
+			body->_fixture->SetSensor(false);
+			glm::vec3 currentPos = playerObject->GetPosition();
+			body->setPosition(currentPos);
+		}
 	}
 }
 
@@ -82,6 +90,9 @@ void ComponentController::HandleJump(std::shared_ptr<ComponentPhysicsBody> body)
 	if (_jetpack) {
 		body->addImpulse(glm::vec2(0, _jetpackStrength));
 		_jetpack = false;
+		_isJetpackActive = true;
+		_jetpackTimer = _jetpackDuration;
+		body->_fixture->SetSensor(true);  // Make player pass through platforms
 	}
 }
 
@@ -99,17 +110,23 @@ void ComponentController::ScreenEdgePan(std::shared_ptr<ComponentPhysicsBody> bo
 		body->setPosition(newPos);
 	}
 	if (currentPos[1] > _playerMaxHeight) {
-		// If current Y position is higher than our recorded maximum,
-		// update _playerMaxHeight to track this new highest point
 		_playerMaxHeight = currentPos[1];
 	}
 }
 
 void ComponentController::KeyEvent(SDL_Event& event) {
+	// Quitting
+	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_q) {
+		SDL_Event quitEvent;
+		quitEvent.type = SDL_QUIT;
+		SDL_PushEvent(&quitEvent);
+		return;
+	}
+
 	// Is the player dead and pressing R?
 	if (_isDead && event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_r) {
-		Reset(); 
-		return;   
+		Reset();
+		return;
 	}
 
 	//Otherwise allow movement
@@ -118,11 +135,11 @@ void ComponentController::KeyEvent(SDL_Event& event) {
 			if (event.type == SDL_KEYDOWN) {
 				_mov.x = -1;
 			}
-			if (event.type == SDL_KEYUP && _mov.x < 0) { 
+			if (event.type == SDL_KEYUP && _mov.x < 0) {
 				_mov.x = 0;
 			}
-			break; 
-			}
+			break;
+		}
 		case SDLK_d: {
 			if (event.type == SDL_KEYDOWN) {
 				_mov.x = 1;
@@ -133,7 +150,6 @@ void ComponentController::KeyEvent(SDL_Event& event) {
 			break;
 		}
 	}
-
 }
 
 void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifold* manifold) {
@@ -152,7 +168,7 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 
 	//Get player information and access to system components for playing SFX
 	auto playerObject = GetGameObject().lock();
-	if (soundCollision) {
+	if (soundCollision && !_isJetpackActive) {  // Only play sounds if not jetpacking
 		if (!collidedBody) {
 			return;
 		}
@@ -165,12 +181,15 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 		if (!collidedBody) {
 			return;
 		}
-		_jump = true;
-		if (platformCollision->porous) {
-			engine->RegisterForDestruction(collidedGameObject);
-			return;
+		if (!_isJetpackActive) {  // Only jump if not in jetpack mode
+			_jump = true;
+			// Only destroy porous platforms if jetpack is not active
+			if (platformCollision->porous) {
+				engine->RegisterForDestruction(collidedGameObject);
+				return;
+			}
 		}
-	  }
+	}
 	else if (jetpackCollision) {
 		if (!collidedBody) {
 			return;
@@ -178,7 +197,6 @@ void ComponentController::OnCollisionStart(ComponentPhysicsBody* other, b2Manifo
 		engine->RegisterForDestruction(collidedGameObject);
 		_jetpack = true;
 	}
-	
 }
 
 void ComponentController::OnCollisionEnd(ComponentPhysicsBody* other, b2Manifold* manifold) {
@@ -212,14 +230,14 @@ void ComponentController::Reset() {
 	if (physicsBody) {
 		physicsBody->_fixture->SetSensor(false);
 	}
-	
+
 	// Reset systems back to ready state
 	_animator.lock()->ToggleDeath();
 	_points.lock()->ToggleDeath();
 
 	// Reset game state variables
 	_isDead = false;
-	_playerMaxHeight = 0.0f;  // Reset the maximum height tracking
+	_playerMaxHeight = 0.0f;
 	if (_gameTime > _bestTime) {
 		_bestTime = _gameTime;
 	}
@@ -227,5 +245,7 @@ void ComponentController::Reset() {
 	_mov = glm::vec3(0);
 	_jump = false;
 	_jetpack = false;
+	_isJetpackActive = false;
+	_jetpackTimer = 0.0f;
 	_points.lock()->ResetPoints();
 }

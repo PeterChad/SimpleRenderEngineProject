@@ -21,11 +21,14 @@ private:
 	glm::vec3 _mov;
 	bool _jump;
 	bool _jetpack;
+	bool _isJetpackActive = false;
+	float _jetpackTimer = 0.0f;
 	bool _isDead = false;
 
 	float _movSpeed = 3;
 	float _jumpStrength = 5;
 	float _jetpackStrength = 7;
+	const float _jetpackDuration = 2.0f; // Duration of jetpack powerup
 	float _maxFallDistance = 1100.0f; // Maximum distance player can fall before dying
 	float _playerMaxHeight = 0.0f; // Tracks the player's highest point
 

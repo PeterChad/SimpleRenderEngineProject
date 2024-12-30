@@ -33,9 +33,9 @@ void ComponentPoints::Render(sre::RenderPass& renderPass) {
 		ImGui::Text("Current Score: %i", _currentBest);
 	}
 	else {
-		ImGui::SetNextWindowSize(ImVec2(410, 120));
+		ImGui::SetNextWindowSize(ImVec2(410, 125));
 		ImGui::Begin("You fell too far :(");
-		ImGui::Text("Falling too far makes the bunny sad, press R to restart. \n ");
+		ImGui::Text("Falling too far makes the bunny sad, press R to restart \nor Q to quit. \n ");
 		ImGui::Text("High Score: %i", _bestPoints);
 		ImGui::Text("Current Score: %i", _currentBest);
 	}

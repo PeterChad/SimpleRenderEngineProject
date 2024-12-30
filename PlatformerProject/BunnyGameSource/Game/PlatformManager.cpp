@@ -121,7 +121,7 @@ void PlatformManager::Update(float deltaTime) {
 		ss <<			"\"serializedData\" : {";
 		ss <<				"\"size\": 1,";
 		ss <<				"\"type\" : 0,";
-		ss <<				"\"bouncy\": " << (isPorous ? "true" : "false") << "";
+		ss <<				"\"porous\": " << (isPorous ? "true" : "false") << "";
 		ss <<			"}";
 		ss <<		"}";
 		ss << ",{\"typeId\": \"COLLISION_SOUND\",\"serializedData\": { \"sound_file\": " << (isPorous ? "\"data/iceplatformcrack.mp3\", \"sound_volume\": 55}" : "\"data/350903__cabled_mess__jump_c_03.wav\", \"sound_volume\": 85}") << "}";
