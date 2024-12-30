@@ -37,7 +37,9 @@ void ComponentController::Update(float deltaTime) {
 		}
 		return;
 	}
+	//Update UI for game time
 	_gameTime += deltaTime;
+	_points.lock()->SetGameTime(_gameTime);
 
 	auto linearVelocity = body->getLinearVelocity();
 	linearVelocity.x = _mov.x * _movSpeed;

@@ -26,8 +26,8 @@ void ComponentPoints::Update(float deltaTime) {
 }
 
 void ComponentPoints::Render(sre::RenderPass& renderPass) {
-	if (!playerDead) {
-		ImGui::SetNextWindowSize(ImVec2(175, 70));
+	if (!_playerDead) {
+		ImGui::SetNextWindowSize(ImVec2(175, 90));
 		ImGui::Begin("Points");
 		ImGui::Text("High Score: %i", _bestPoints);
 		ImGui::Text("Current Score: %i", _currentBest);
@@ -39,5 +39,6 @@ void ComponentPoints::Render(sre::RenderPass& renderPass) {
 		ImGui::Text("High Score: %i", _bestPoints);
 		ImGui::Text("Current Score: %i", _currentBest);
 	}
+	ImGui::Text("Game Time: %i", (int)_gameTime);
 	ImGui::End();
 }
