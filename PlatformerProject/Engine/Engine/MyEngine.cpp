@@ -123,7 +123,7 @@ namespace MyEngine {
 	{
 		sre::RenderPass renderPass = sre::RenderPass::create()
 			.withCamera(_camera)
-			.withClearColor(true, { .3f, .3f, 1, 1 })
+			.withClearColor(true, { .2f, .5f, 0.9, 1 })
 			.build();
 
 		if (auto root = _root.lock())
