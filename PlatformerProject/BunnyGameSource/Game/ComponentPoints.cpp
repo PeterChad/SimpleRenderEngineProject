@@ -33,9 +33,18 @@ void ComponentPoints::Render(sre::RenderPass& renderPass) {
 		ImGui::Text("Current Score: %i", _currentBest);
 	}
 	else {
-		ImGui::SetNextWindowSize(ImVec2(410, 125));
+		ImGui::SetNextWindowSize(ImVec2(565, 140));
 		ImGui::Begin("You fell too far :(");
-		ImGui::Text("Falling too far makes the bunny sad, press R to restart \nor Q to quit. \n ");
+		ImGui::Text("Falling too far makes the bunny sad!");
+		ImGui::Text("Press R to restart the game. Press Q or click the Exit button to quit the game.");
+		if (ImGui::Button("Exit"))
+		{
+			SDL_Event exitEvent;
+			exitEvent.type = SDL_QUIT;
+			SDL_PushEvent(&exitEvent);
+			MyEngine::Engine* engine = MyEngine::Engine::GetInstance();
+			engine->ProcessEvents(exitEvent);
+		}
 		ImGui::Text("High Score: %i", _bestPoints);
 		ImGui::Text("Current Score: %i", _currentBest);
 	}

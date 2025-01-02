@@ -120,6 +120,7 @@ void ComponentController::KeyEvent(SDL_Event& event) {
 		SDL_Event quitEvent;
 		quitEvent.type = SDL_QUIT;
 		SDL_PushEvent(&quitEvent);
+		MyEngine::Engine::GetInstance()->ProcessEvents(quitEvent);
 		return;
 	}
 

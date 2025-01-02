@@ -74,7 +74,16 @@ namespace MyEngine {
 				_b2World->SetDebugDraw(nullptr);
 			}
 		}
-			
+		if (event.type == SDL_QUIT)
+		{
+			ImGuiIO io = ImGui::GetIO();
+			io.BackendPlatformUserData = nullptr;
+			io.BackendRendererUserData = nullptr;
+			_renderer.stopEventLoop();
+			_renderer.~SDLRenderer();
+			_b2World->~b2World();
+			exit(0);
+		}
 
 		if (auto root = _root.lock())
 			root->KeyEvent(event);
