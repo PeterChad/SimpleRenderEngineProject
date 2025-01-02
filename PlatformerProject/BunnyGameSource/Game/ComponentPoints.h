@@ -19,4 +19,5 @@ public:
 	void SetGameTime(float gt) { _gameTime = gt; }
 	void ResetPoints() { _currentBest = 0; _bestHeight = 0; }
 	void ToggleDeath() { _playerDead = !_playerDead; }
+	int GetHeight() { return _bestHeight; }
 };

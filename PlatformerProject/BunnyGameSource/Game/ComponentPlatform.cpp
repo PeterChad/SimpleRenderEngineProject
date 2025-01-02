@@ -1,5 +1,6 @@
 #include "ComponentPlatform.h"
-
+#include "ComponentPoints.h"
+#include "Engine/MyEngine.h"
 #include "Engine/Components/ComponentPhysicsBody.h"
 #include "Engine/Components/ComponentRendererSprite.h"
 
@@ -27,5 +28,22 @@ void ComponentPlatform::Init(rapidjson::Value& serializedData) {
 	else {
 		sprite->SetSprite("bunny-art", "ground_snow.png");
 	}
+
 }
-	
+
+void ComponentPlatform::Update(float deltaTime) {
+	auto gameObject = GetGameObject().lock();
+	if (!gameObject) return;
+
+	auto engine = MyEngine::Engine::GetInstance();
+	auto playerObject = engine->GetGameObject("Player");
+
+	float platformHeight = gameObject->GetPosition()[1];
+	auto points = playerObject.lock()->FindComponent<ComponentPoints>();
+	float playerHeight = points.lock()->GetHeight();
+
+	if (playerHeight > (platformHeight + 2000) && platformHeight > 700) {
+		engine->RegisterForDestruction(this->GetGameObject().lock().get());
+	}
+}
+

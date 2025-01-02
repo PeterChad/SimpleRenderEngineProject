@@ -9,5 +9,6 @@ private:
 
 public:
 	virtual void Init(rapidjson::Value& serializedData) override;
+	void Update(float deltaTime) override;
 	bool porous;
 };
